@@ -1,0 +1,55 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.alert import Alert
+from time import strftime
+import time
+import datetime
+from datetime import timedelta
+
+driver = webdriver.Chrome()
+url = 'https://www.yangsancc.co.kr/'
+date = datetime.datetime.now().weekday()
+now = time.strftime("%H:%M:%S", time.localtime(time.time()))
+a = 0
+day = datetime.datetime.now()
+reservation = day + timedelta(days=14)
+reservationDate = reservation.strftime(('%#d'))
+
+#open website
+driver.get(url)
+
+#process1: signin
+driver.find_element(by='id', value='log_id').send_keys('jun3411')
+driver.find_element(by='id', value='login_pw').send_keys('kjw3254')
+driver.find_element(by='id', value='login_pw').send_keys(Keys.ENTER)
+Alert(driver).accept()
+print('로그인이 완료되었습니다.')
+
+#process2: Standby the thread until 9am if its Tuesday or Thursday
+if date == 1 or date == 3:
+    while now < '09:00:00':
+        time.sleep(0.5)
+        a += 0.5
+        now = time.strftime("%H:%M:%S", time.localtime(time.time()))
+        print('프로그램 대기중입니다 | {} 초 경과 | 현재시간 {}'.format(a, now))
+    print('예약 프로세스를 시작합니다')
+    driver.get('https://www.yangsancc.co.kr/pagesite/reservation/live.asp')
+    driver.implicitly_wait(20)
+    # process3: pick a date
+    if day.month == reservation.month:
+        driver.find_elements_by_link_text(reservationDate)[0].click()
+    else:
+        driver.find_elements_by_link_text(reservationDate)[1].click()
+elif date == 2:
+else:
+    print('예약할 수 있는 요일이 아닙니다.')
+
+#process4: pick a time
+
+#process5: apply
+
+
+
+#오늘이 화요일 혹은 목요일이라면 오전 9시가 될때까지 기다려라. 9시가 되면 예약창을 새로고침하고 화요일이면 2주후 화요일 아침 7시반 마루를 선택하라. 목요일이면 2주후 목요일 아침 7시반 마루를 선택하라.
+#오늘이 수요일 이라면 오전 10시가 될때까지 기다려라. 10시가 되면 예약창을 새로고침하고 2주후 일요일 12시 전후의 마루를 선택하라. 만약 실패한다면 아침 7시반을 선택하고 그것도 안된다면 비어있는것을 임의로 선택하라.
+
