@@ -3,8 +3,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert
 from dotenv import load_dotenv
 import os
+from webdriver_manager.chrome import ChromeDriverManager
 
-driver = webdriver.Chrome()
+
+driver = webdriver.Chrome(ChromeDriverManager().install())
 load_dotenv(verbose=True)
 
 
