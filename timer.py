@@ -17,4 +17,4 @@ else:
     target_date_weekend = -1
 
 
-
+def is_valid_time():

@@ -23,8 +23,8 @@ reservationDateE = reservationE.strftime('%#d')
 driver.get(url)
 
 #process1: signin
-driver.find_element(by='id', value='log_id').send_keys('jun3411')
-driver.find_element(by='id', value='login_pw').send_keys('kjw3254')
+driver.find_element(by='id', value='log_id').send_keys('')
+driver.find_element(by='id', value='login_pw').send_keys('')
 driver.find_element(by='id', value='login_pw').send_keys(Keys.ENTER)
 Alert(driver).accept()
 print('로그인이 완료되었습니다.')
